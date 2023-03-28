@@ -9,7 +9,7 @@
     using namespace ariel;
     using namespace std;
     int Player:: stacksize(){
-        return 21;
+        return 0;
     }
     int Player:: cardesTaken(){
         return 5;
