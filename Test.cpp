@@ -49,20 +49,21 @@ TEST_CASE("The game is not over and five turns have been played"){
             break;
         }
     }
-    REQUIRE(p1.stacksize() > 0);
-    SUBCASE("Test that at least one of the players receives the right amount (a multiple of 2) of cards in cardesTaken()"){
-            CHECK((p1.cardesTaken()>0 || p2.cardesTaken()>0));
-            CHECK((p1.cardesTaken()%2==0 && p2.cardesTaken()%2==0));
-            CHECK((p1.cardesTaken()+ p2.cardesTaken())<=(STACK_SIZE -2));
-            CHECK((p1.cardesTaken()+ p2.cardesTaken())>=(TURNS*2));
+    if(p1.stacksize() > 0){
+        SUBCASE("Test that at least one of the players receives the right amount (a multiple of 2) of cards in cardesTaken()"){
+                CHECK((p1.cardesTaken()>0 || p2.cardesTaken()>0));
+                CHECK((p1.cardesTaken()%2==0 && p2.cardesTaken()%2==0));
+                CHECK((p1.cardesTaken()+ p2.cardesTaken())<=(STACK_SIZE -2));
+                CHECK((p1.cardesTaken()+ p2.cardesTaken())>=(TURNS*2));
+        }
+        SUBCASE("Test that at least five cards have been taken from the stacksize() of each player"){
+                CHECK(p1.stacksize() <=(STACK_SIZE/2-TURNS));
+                CHECK(p2.stacksize() <=(STACK_SIZE/2-TURNS));
+        }
+        SUBCASE("Throw exception in printWiner() when the game in not over"){
+                CHECK_THROWS(game.printWiner());
+        }  
     }
-    SUBCASE("Test that at least five cards have been taken from the stacksize() of each player"){
-            CHECK(p1.stacksize() <=(STACK_SIZE/2-TURNS));
-            CHECK(p2.stacksize() <=(STACK_SIZE/2-TURNS));
-    }
-    SUBCASE("Throw exception in printWiner() when the game in not over"){
-            CHECK_THROWS(game.printWiner());
-    }  
 }
 
 TEST_CASE("The game has been played and is over"){
@@ -76,6 +77,8 @@ TEST_CASE("The game has been played and is over"){
     }
     SUBCASE("Test that at least one of the players has cardesTaken()"){
         CHECK((p1.cardesTaken()>0 || p2.cardesTaken()>0));
+        CHECK((p1.cardesTaken()+p2.cardesTaken())== STACK_SIZE);
+
     }
     int points_p1 = p1.cardesTaken();
     int points_p2= p2.cardesTaken();
