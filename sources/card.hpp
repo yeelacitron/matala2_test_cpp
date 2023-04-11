@@ -13,7 +13,7 @@ namespace ariel{
             int value;
         public:
             Card(int value_, std::string shape_):value(value_),shape(shape_){}
-        size_t getValue(){
+        size_t getValue() const{
             return (size_t)value;
         }
         std::string getShape(){

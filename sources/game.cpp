@@ -39,11 +39,13 @@ void Game::playTurn(){
                 if(cardP1.getValue()< cardP2.getValue()){ //player 2 wins
                     add = add +". "+ player_2.getName()+ " wins.";
                     player_2.setPoints(player_2.cardesTaken()+2*(rounds));
+                    player_2.setWinRate(player_2.getWinRate()+1);
                     tie = false;
                 }
                 else if (cardP1.getValue()> cardP2.getValue()){//player 1 wins
                     add = add +". "+ player_1.getName()+ " wins.";
                     player_1.setPoints(player_1.cardesTaken()+2*(rounds));
+                    player_1.setWinRate(player_1.getWinRate()+1);
                     tie = false;
                 }
                 else{ //draw
@@ -69,11 +71,13 @@ void Game::playTurn(){
                 else if ((cardP1.getValue() == 1 && cardP2.getValue() != 2)||(cardP1.getValue() == 2 && cardP2.getValue() == 1)){ //player 1 wins
                     add = add +". "+ player_1.getName()+ " wins.";
                     player_1.setPoints(player_1.cardesTaken()+2*(rounds));
+                    player_1.setWinRate(player_1.getWinRate()+1);
                     tie = false;
                 }
                 else if((cardP2.getValue() == 1 && cardP1.getValue() != 2)||(cardP2.getValue() == 2 && cardP1.getValue() == 1)){ //player 2 wins
                     add = add +". "+ player_2.getName()+ " wins.";
                     player_2.setPoints(player_2.cardesTaken()+2*(rounds));
+                    player_2.setWinRate(player_2.getWinRate()+1);
                     tie = false;
                 }
             }    
@@ -137,12 +141,13 @@ void Game::printStats(){
         throw exception();
     }
     cout<< player_1.getName()+": "<<endl;
-    cout<<"cards won: "+ to_string(player_1.cardesTaken());
-    cout<< " draw rate:"+ to_string(getDrawRate());
+    cout<<"cards won: "+ to_string(player_1.cardesTaken())+", draw rate:"+ to_string(getDrawRate()) \
+    + ", win rate:"+ to_string(player_1.getWinRate())<<endl;
+    
 
     cout<< player_2.getName()+": "<<endl;
-    cout<<"cards won: "+ to_string(player_2.cardesTaken());
-    cout<< " draw rate:"+ to_string(getDrawRate());
+    cout<<"cards won: "+ to_string(player_2.cardesTaken())+", draw rate:"+ to_string(getDrawRate()) \
+    + ", win rate:"+ to_string(player_2.getWinRate())<<endl;
     
 }
 

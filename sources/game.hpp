@@ -26,7 +26,7 @@ namespace ariel{
             void printLog();
             void printStats();
             Game(Player & ply1,Player & ply2);
-            void setLastlog(std::string add){
+            void setLastlog(std::string  add){
                 log.push_back(add);
             }
             Card getCardPly1() {

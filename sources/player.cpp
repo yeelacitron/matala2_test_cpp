@@ -8,5 +8,9 @@
 
     using namespace ariel;
     using namespace std;
-
+    size_t Player:: getNextCard(){
+                int rev= nextCard++;
+                cardsInStack--;
+                return (size_t)rev;
+    }
  

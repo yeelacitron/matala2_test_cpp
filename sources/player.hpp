@@ -13,10 +13,11 @@ namespace ariel{
             int nextCard;
             int points;
             int cardsInStack;
+            int winRate;
         
         public:
             
-            Player(std::string name_): name(name_),in_game(false),points(0),cardsInStack(26){}
+            Player(std::string name_): name(name_),in_game(false),points(0),cardsInStack(26),winRate(0){}
 
             std::string getName() const{
                 return this->name;
@@ -27,11 +28,7 @@ namespace ariel{
             void setIn_game(bool bol){
                 this->in_game = bol;
             }
-            size_t getNextCard(){
-                int rev= nextCard++;
-                cardsInStack--;
-                return (size_t)rev;
-            }
+            size_t getNextCard();
             void setNextCard(int num){
                 this->nextCard = num;
             }
@@ -46,6 +43,12 @@ namespace ariel{
             }
             void setCardsInStack(int num){
                 this->cardsInStack = num;
+            }
+            void setWinRate(int num){
+                winRate = num;
+            }
+            int getWinRate(){
+                return winRate;
             }
 
 
