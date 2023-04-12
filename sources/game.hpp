@@ -18,6 +18,7 @@ namespace ariel{
             std::vector<Card> stack;
             std::vector<std::string> log;
             int draw_rate;
+            int rounds;
         public:
             void printLastTurn();
             void playTurn();
@@ -26,7 +27,7 @@ namespace ariel{
             void printLog();
             void printStats();
             Game(Player & ply1,Player & ply2);
-            void setLastlog(std::string  add){
+            void setLastlog(std::string  const & add){
                 log.push_back(add);
             }
             Card getCardPly1() {
@@ -42,6 +43,12 @@ namespace ariel{
             }
             int getDrawRate() const{
                 return draw_rate;
+            }
+            void setRounds(int num){
+                rounds= num;
+            }
+            int getRounds() const{
+                return rounds;
             }
             
     };

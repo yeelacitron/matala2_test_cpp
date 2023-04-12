@@ -16,8 +16,6 @@ using namespace std;
 #include "sources/card.hpp"
 using namespace ariel;
 
-
-
 int main() {
   // Create two players with their names 
    Player p1("Alice");

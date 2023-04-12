@@ -12,11 +12,11 @@ namespace ariel{
             std::string shape;
             int value;
         public:
-            Card(int value_, std::string shape_):value(value_),shape(shape_){}
+            Card(int value_, std::string shape_):value(value_),shape(std::move(shape_)){}
         size_t getValue() const{
             return (size_t)value;
         }
-        std::string getShape(){
+        std::string getShape() const{
             return shape;
         }
             

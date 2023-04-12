@@ -17,7 +17,7 @@ namespace ariel{
         
         public:
             
-            Player(std::string name_): name(name_),in_game(false),points(0),cardsInStack(26),winRate(0){}
+            Player(std::string name_): name(std::move(name_)),in_game(false),points(0),cardsInStack(0),winRate(0),nextCard(0){}
 
             std::string getName() const{
                 return this->name;
@@ -47,7 +47,7 @@ namespace ariel{
             void setWinRate(int num){
                 winRate = num;
             }
-            int getWinRate(){
+            int getWinRate() const{
                 return winRate;
             }
 

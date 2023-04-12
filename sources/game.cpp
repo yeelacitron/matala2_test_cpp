@@ -27,24 +27,24 @@ void Game::playTurn(){
     if(player_1.stacksize() >0){
         string add ="";
         bool tie = true;
-        int rounds =0;
+        int cardDrawn =0;
         int draws=0;
         while(tie && player_1.stacksize() >0){
             Card cardP1 = getCardPly1();
             Card cardP2 = getCardPly2();
-            rounds++;
+            cardDrawn++;
             add = add + player_1.getName() + " played "+cardsToNumbers.at(cardP1.getValue()-1)+" "+cardP1.getShape() + " " + \
                 player_2.getName() + " played "+cardsToNumbers.at(cardP2.getValue()-1) +" "+ cardP2.getShape();
-            if(cardP1.getValue() != 1 && cardP2.getValue()!= 1 ){
+            if(cardP1.getValue() != 1 && cardP2.getValue()!= 1 ){ //non of the cards are ace
                 if(cardP1.getValue()< cardP2.getValue()){ //player 2 wins
                     add = add +". "+ player_2.getName()+ " wins.";
-                    player_2.setPoints(player_2.cardesTaken()+2*(rounds));
+                    player_2.setPoints(player_2.cardesTaken()+2*(cardDrawn));
                     player_2.setWinRate(player_2.getWinRate()+1);
                     tie = false;
                 }
                 else if (cardP1.getValue()> cardP2.getValue()){//player 1 wins
                     add = add +". "+ player_1.getName()+ " wins.";
-                    player_1.setPoints(player_1.cardesTaken()+2*(rounds));
+                    player_1.setPoints(player_1.cardesTaken()+2*(cardDrawn));
                     player_1.setWinRate(player_1.getWinRate()+1);
                     tie = false;
                 }
@@ -53,30 +53,30 @@ void Game::playTurn(){
                     if(player_1.stacksize() >0){
                         getCardPly1();
                         getCardPly2();
-                        rounds++;
+                        cardDrawn++;
                         draws++;
                     }
                 }
             }
-            else{
+            else{ //at least one of the caed is 
                 if(cardP1.getValue() == 1 && cardP2.getValue() == 1 ){//draw
                     add = add + ". draw. ";
                     if(player_1.stacksize() >0){
                         getCardPly1();
                         getCardPly2();
-                        rounds++;
+                        cardDrawn++;
                         draws++;
                     }
                 }
                 else if ((cardP1.getValue() == 1 && cardP2.getValue() != 2)||(cardP1.getValue() == 2 && cardP2.getValue() == 1)){ //player 1 wins
                     add = add +". "+ player_1.getName()+ " wins.";
-                    player_1.setPoints(player_1.cardesTaken()+2*(rounds));
+                    player_1.setPoints(player_1.cardesTaken()+2*(cardDrawn));
                     player_1.setWinRate(player_1.getWinRate()+1);
                     tie = false;
                 }
                 else if((cardP2.getValue() == 1 && cardP1.getValue() != 2)||(cardP2.getValue() == 2 && cardP1.getValue() == 1)){ //player 2 wins
                     add = add +". "+ player_2.getName()+ " wins.";
-                    player_2.setPoints(player_2.cardesTaken()+2*(rounds));
+                    player_2.setPoints(player_2.cardesTaken()+2*(cardDrawn));
                     player_2.setWinRate(player_2.getWinRate()+1);
                     tie = false;
                 }
@@ -85,8 +85,11 @@ void Game::playTurn(){
         setLastlog(add);
         setDrawRate(getDrawRate()+draws);
         if(tie){
-            player_1.setPoints(player_1.cardesTaken()+rounds);
-            player_2.setPoints(player_2.cardesTaken()+rounds);
+            player_1.setPoints(player_1.cardesTaken()+cardDrawn);
+            player_2.setPoints(player_2.cardesTaken()+cardDrawn);
+        }
+        else{
+            setRounds(getRounds()+1);
         }
 
     }
@@ -141,17 +144,17 @@ void Game::printStats(){
         throw exception();
     }
     cout<< player_1.getName()+": "<<endl;
-    cout<<"cards won: "+ to_string(player_1.cardesTaken())+", draw rate:"+ to_string(getDrawRate()) \
-    + ", win rate:"+ to_string(player_1.getWinRate())<<endl;
+    cout<<"cards won: "+ to_string(player_1.cardesTaken())+", draw amount:"+ to_string(getDrawRate()) \
+    + ", win amount:"+ to_string(player_1.getWinRate())+", win rate:"+ to_string((int)((((double)player_1.getWinRate())/getRounds()*100)))+"%"<<endl;
     
-
+    cout<<to_string(getRounds())<<endl;
     cout<< player_2.getName()+": "<<endl;
-    cout<<"cards won: "+ to_string(player_2.cardesTaken())+", draw rate:"+ to_string(getDrawRate()) \
-    + ", win rate:"+ to_string(player_2.getWinRate())<<endl;
+    cout<<"cards won: "+ to_string(player_2.cardesTaken())+", draw amount:"+ to_string(getDrawRate()) \
+    + ", win amount:"+ to_string(player_2.getWinRate())+", win rate:"+ to_string((int)((((double)player_2.getWinRate())/getRounds()*100)))+"%"<<endl;
     
 }
 
-Game::Game(Player & ply1,Player & ply2) : player_1(ply1),player_2(ply2),draw_rate(0){
+Game::Game(Player & ply1,Player & ply2) : player_1(ply1),player_2(ply2),draw_rate(0),rounds(0){
             if(player_1.getIn_game() || player_2.getIn_game()){
                 throw exception();
             }
